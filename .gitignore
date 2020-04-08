@@ -1,4 +1,2 @@
-node_modules/
-dist/
-src/generated/
-*.env*
+node_modules
+yarn-error.log
