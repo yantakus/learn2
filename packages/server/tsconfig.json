@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "outDir": "dist",
+    "lib": ["esnext"],
+    "strict": true,
+    "baseUrl": "./src"
+  },
+  "exclude": ["node_modules"],
+  "include": ["**/*.ts"]
+}

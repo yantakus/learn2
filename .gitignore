@@ -1,14 +1,12 @@
 # dependencies
-/node_modules
-/.pnp
-.pnp.js
+node_modules
 
 # testing
 /coverage
 
 # next.js
-client/.next/
-client/out/
+.next
+out
 
 # production
 */build
@@ -23,8 +21,13 @@ client/out/
 
 # debug
 npm-debug.log*
+
+# yarn
+.yarn
 yarn-debug.log*
 yarn-error.log*
 
 server/dist/
 server/src/generated/
+
+.vscode
