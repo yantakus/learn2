@@ -1,17 +1,17 @@
 import React from 'react'
 
 import { withApollo } from 'utils/apollo'
-import FirebaseAuth from 'components/FirebaseAuth'
+import { Auth } from 'components'
 
-const Auth = () => {
+const AuthPage = () => {
   return (
     <div>
       <p>Sign in</p>
       <div>
-        <FirebaseAuth />
+        <Auth />
       </div>
     </div>
   )
 }
 
-export default withApollo()(Auth)
+export default withApollo()(AuthPage)

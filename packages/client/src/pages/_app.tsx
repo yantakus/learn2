@@ -1,12 +1,16 @@
-import { ThemeProvider, CSSReset } from '@chakra-ui/core'
+import { ThemeProvider, CSSReset, Box } from '@chakra-ui/core'
 
+import { Header } from 'components'
 import theme from '../theme'
 
 function App({ Component, pageProps }) {
   return (
     <ThemeProvider theme={theme}>
       <CSSReset />
-      <Component {...pageProps} />
+      <Header />
+      <Box maxW="6xl" mx="auto" p="4">
+        <Component {...pageProps} />
+      </Box>
     </ThemeProvider>
   )
 }

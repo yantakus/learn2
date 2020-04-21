@@ -1,5 +1,5 @@
 import { mutationType, stringArg, intArg } from 'nexus'
-import { getUserId } from '../utils'
+import { getUserId } from 'utils'
 
 export const Mutation = mutationType({
   definition(t) {
@@ -10,15 +10,15 @@ export const Mutation = mutationType({
         title: stringArg({ nullable: false }),
         content: stringArg(),
       },
-      resolve: (_parent, { title, content }, ctx) => {
-        const userId = getUserId(ctx)
+      resolve: async (_parent, { title, content }, ctx) => {
+        const userId = await getUserId(ctx)
         if (!userId) throw new Error('Could not authenticate user.')
         return ctx.prisma.post.create({
           data: {
             title,
             content,
             published: false,
-            author: { connect: { uid: Number(userId) } },
+            author: { connect: { uid: userId } },
           },
         })
       },
