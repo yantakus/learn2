@@ -1,8 +1,7 @@
 import { verifyIdToken } from '@learn/common/utils'
-import { Context } from 'context'
 
-function getUserId(context: Context) {
-  const Authorization = context.request.get('Authorization')
+function getUserId(context) {
+  const Authorization = context.req.get('Authorization')
   if (Authorization) {
     const token = Authorization.replace('Bearer ', '')
     return verifyIdToken(token).then((decodedToken) => decodedToken?.uid)

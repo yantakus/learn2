@@ -6,7 +6,6 @@
   "scripts": {
     "dev-client": "yarn workspace @learn/client dev",
     "dev-server": "yarn workspace @learn/server dev",
-    "generate": "yarn workspace @learn/server generate",
     "migrate-save": "yarn workspace @learn/server migrate-save",
     "migrate-up": "yarn workspace @learn/server migrate-up"
   },
