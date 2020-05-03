@@ -1,1 +1,1 @@
-export { default as verifyIdToken } from './verifyIdToken'
+export { default as initFirebaseAdmin } from './initFirebaseAdmin'

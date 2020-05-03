@@ -1,34 +1,42 @@
-import { rule, shield } from 'graphql-shield'
-import { getUserId } from 'utils'
+import { rule, shield } from 'nexus-plugin-shield'
+import { getUserId } from '../utils'
 
 const rules = {
   isAuthenticatedUser: rule()(async (_parent, _args, context) => {
     const userId = await getUserId(context)
     return Boolean(userId)
   }),
-  isPostOwner: rule()((_parent, { id }, context) => {
+  isVideoOwner: rule()((_parent, { ytId }, context: NexusContext) => {
     const userIdPromise = getUserId(context)
-    const authorPromise = context.prisma.post
+    const authorPromise = context.db.video
       .findOne({
         where: {
-          id: Number(id),
+          ytId,
         },
       })
-      .author()
+      .uploader()
     return Promise.all([userIdPromise, authorPromise]).then(
-      ([userId, author]) => userId === author.id,
+      ([userId, author]) => userId === author?.uid,
     )
   }),
 }
 
-export const permissions = shield({
-  Query: {
-    filterPosts: rules.isAuthenticatedUser,
-    post: rules.isAuthenticatedUser,
+const permissions = shield({
+  rules: {
+    Query: {
+      // me: rules.isAuthenticatedUser,
+    },
+    Mutation: {
+      addVideo: rules.isAuthenticatedUser,
+      editVideo: rules.isVideoOwner,
+    },
   },
-  Mutation: {
-    createDraft: rules.isAuthenticatedUser,
-    deletePost: rules.isPostOwner,
-    publish: rules.isPostOwner,
+  options: {
+    fallbackError: (thrownThing: any, parent, args, context, info) => {
+      console.error(thrownThing)
+      return thrownThing
+    },
   },
 })
+
+export default permissions

@@ -2,10 +2,13 @@
   "compilerOptions": {
     "target": "es2016",
     "module": "commonjs",
-    "lib": ["esnext"],
+    "lib": [
+      "esnext"
+    ],
     "strict": true,
-    "rootDir": "src",
-    "esModuleInterop": true
+    "rootDir": "."
   },
-  "include": ["src"]
+  "include": [
+    "."
+  ]
 }

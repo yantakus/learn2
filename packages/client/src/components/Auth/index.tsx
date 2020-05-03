@@ -6,13 +6,9 @@ import 'firebase/auth'
 import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import { useRouter } from 'next/router'
-import {
-  NexusGenFieldTypes,
-  NexusGenArgTypes,
-} from '@learn/server/src/generated/nexus'
 import { Alert, AlertIcon, AlertDescription } from '@chakra-ui/core'
 
-import initFirebase from 'utils/auth/initFirebase'
+import { initFirebaseApp } from 'utils'
 
 const CREATE_USER_MUTATION = gql`
   mutation createOneUser($data: UserCreateInput!) {
@@ -23,7 +19,10 @@ const CREATE_USER_MUTATION = gql`
 `
 
 // Init the Firebase app.
-initFirebase()
+initFirebaseApp()
+
+// As httpOnly cookies are to be used, do not persist any state client side.
+firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE)
 
 function createFirebaseAuthConfig(createOneUser, router, setAuthError) {
   return {
@@ -55,7 +54,7 @@ function createFirebaseAuthConfig(createOneUser, router, setAuthError) {
         }
       },
     },
-  }
+  } as any
 }
 
 const FirebaseAuth = () => {
@@ -69,10 +68,7 @@ const FirebaseAuth = () => {
       setRenderAuth(true)
     }
   }, [])
-  const [createOneUser] = useMutation<
-    { createOneUser: NexusGenFieldTypes['Mutation']['createOneUser'] },
-    { variables: NexusGenArgTypes['Mutation']['createOneUser'] }
-  >(CREATE_USER_MUTATION)
+  const [createOneUser] = useMutation(CREATE_USER_MUTATION)
   return (
     <div>
       {renderAuth ? (

@@ -16,9 +16,8 @@ schema.queryType({
               uid: userId,
             },
           })
-        } else {
-          return new Error('You are not authenticated')
         }
+        return null
       },
     })
 

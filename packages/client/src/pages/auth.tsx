@@ -1,6 +1,5 @@
 import React from 'react'
 
-import { withApollo } from 'utils/apollo'
 import { Auth } from 'components'
 
 const AuthPage = () => {
@@ -14,4 +13,4 @@ const AuthPage = () => {
   )
 }
 
-export default withApollo()(AuthPage)
+export default AuthPage

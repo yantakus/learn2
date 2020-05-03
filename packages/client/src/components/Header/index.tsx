@@ -1,5 +1,10 @@
 import React from 'react'
 import { Box, Heading, Flex, Text, Button } from '@chakra-ui/core'
+import Router from 'next/router'
+import Link from 'next/link'
+
+import { logout } from 'utils'
+import { useAuth } from 'hooks'
 
 const MenuItem = ({ children }) => (
   <Text mr="6" display="block">
@@ -8,6 +13,7 @@ const MenuItem = ({ children }) => (
 )
 
 const Header = (props) => {
+  const { user, refetch } = useAuth()
   return (
     <Box bg="teal.500">
       <Flex
@@ -31,9 +37,38 @@ const Header = (props) => {
           <MenuItem>Help</MenuItem>
         </Flex>
 
-        <Button ml="auto" bg="transparent" border="1px">
-          Create account
-        </Button>
+        <Box ml="auto">
+          {user && (
+            <Box display="inline" mr="4">
+              You're signed in. Uid: {user.uid}
+            </Box>
+          )}
+          {!user ? (
+            <Link href="/auth">
+              <a>
+                <Button ml="auto" bg="transparent" border="1px">
+                  Sign in
+                </Button>
+              </a>
+            </Link>
+          ) : (
+            <Button
+              ml="auto"
+              bg="transparent"
+              border="1px"
+              onClick={async () => {
+                try {
+                  await logout()
+                  refetch()
+                } catch (e) {
+                  console.error(e)
+                }
+              }}
+            >
+              Sign out
+            </Button>
+          )}
+        </Box>
       </Flex>
     </Box>
   )
