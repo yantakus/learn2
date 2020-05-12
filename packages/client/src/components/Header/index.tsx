@@ -1,6 +1,5 @@
 import React from 'react'
 import { Box, Heading, Flex, Text, Button } from '@chakra-ui/core'
-import Router from 'next/router'
 import Link from 'next/link'
 
 import { logout } from 'utils'
