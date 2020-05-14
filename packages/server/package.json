@@ -10,6 +10,7 @@
     "migrate-up": "npx prisma migrate up --experimental"
   },
   "dependencies": {
+    "@learn/common": "1.0.0",
     "@types/cookie-parser": "^1.4.2",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
@@ -19,8 +20,8 @@
     "graphql-yoga": "1.18.3",
     "isomorphic-unfetch": "^3.0.0",
     "lodash": "^4.17.15",
-    "nexus": "^0.20.0",
-    "nexus-plugin-prisma": "0.7.0",
+    "nexus": "0.20.0",
+    "nexus-plugin-prisma": "0.8.0",
     "nexus-plugin-shield": "^0.1.2",
     "react-firebaseui": "^4.1.0"
   },
