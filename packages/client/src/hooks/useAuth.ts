@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import firebase from 'firebase/app'
 import 'firebase/auth'
@@ -16,16 +16,10 @@ const CURRENT_USER_QUERY = gql`
   }
 `
 
-const useAuth = () => {
-  const { data, refetch } = useQuery(CURRENT_USER_QUERY, {
-    fetchPolicy: 'cache-and-network',
+const useAuth = (force = false) => {
+  const { data, refetch, loading } = useQuery(CURRENT_USER_QUERY, {
+    fetchPolicy: force ? 'cache-and-network' : 'cache-first',
   })
-  const [user, setUser] = useState(null)
-
-  useEffect(() => {
-    const user = data?.me
-    setUser(user)
-  }, [data])
 
   useEffect(() => {
     // Listen for auth state changes.
@@ -36,13 +30,10 @@ const useAuth = () => {
   }, [])
 
   function onChange(user) {
-    setUser(user)
-
-    // Call server to update session.
-    setSession(user)
+    if (user) setSession(user).then(() => refetch?.())
   }
 
-  return { user, refetch }
+  return { user: data?.me, refetch, loading }
 }
 
 export default useAuth

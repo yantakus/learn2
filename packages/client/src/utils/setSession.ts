@@ -18,6 +18,12 @@ const setSession = (user) => {
       })
     })
   }
+
+  // // Log out.
+  // return fetch('/api/logout', {
+  //   method: 'POST',
+  //   credentials: 'same-origin',
+  // })
 }
 
 export default setSession

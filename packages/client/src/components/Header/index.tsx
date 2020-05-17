@@ -12,7 +12,7 @@ const MenuItem = ({ children }) => (
 )
 
 const Header = (props) => {
-  const { user, refetch } = useAuth()
+  const { user, refetch } = useAuth(true)
   return (
     <Box bg="teal.500">
       <Flex
@@ -27,13 +27,15 @@ const Header = (props) => {
       >
         <Flex align="center" mr="20">
           <Heading as="h1" size="lg" letterSpacing="-.1rem">
-            Learn
+            <Link href="/">Learn</Link>
           </Heading>
         </Flex>
 
         <Flex>
+          <MenuItem>
+            <Link href="/add">Add video</Link>
+          </MenuItem>
           <MenuItem>About</MenuItem>
-          <MenuItem>Help</MenuItem>
         </Flex>
 
         <Box ml="auto">

@@ -41,16 +41,12 @@ function createFirebaseAuthConfig(createOneUser, router, setAuthError) {
         const { metadata } = user
         const isNewUser = metadata.creationTime === metadata.lastSignInTime
         if (isNewUser) {
-          createOneUser({ variables: { data: { uid: user.uid } } })
-            .then(() => {
-              router.push('/')
-            })
-            .catch((error) => {
+          createOneUser({ variables: { data: { uid: user.uid } } }).catch(
+            (error) => {
               console.error(error)
               setAuthError(error.message)
-            })
-        } else {
-          router.push('/')
+            },
+          )
         }
       },
     },
