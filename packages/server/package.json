@@ -12,17 +12,20 @@
   "dependencies": {
     "@learn/common": "1.0.0",
     "@types/cookie-parser": "^1.4.2",
+    "@types/graphql-type-json": "^0.3.2",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "firebase": "^7.13.2",
     "firebase-admin": "^8.10.0",
     "graphql-tag": "^2.10.3",
+    "graphql-type-json": "^0.3.1",
     "graphql-yoga": "1.18.3",
     "isomorphic-unfetch": "^3.0.0",
     "lodash": "^4.17.15",
     "nexus": "0.20.0",
     "nexus-plugin-prisma": "0.8.0",
     "nexus-plugin-shield": "^0.1.2",
+    "node-fetch": "^2.6.0",
     "react-firebaseui": "^4.1.0"
   },
   "devDependencies": {

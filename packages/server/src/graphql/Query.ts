@@ -1,9 +1,24 @@
 import { schema } from 'nexus'
+import fetch from 'node-fetch'
+
 import { getUserId } from '../utils'
 
 schema.queryType({
   definition(t) {
     t.crud.users()
+
+    t.field('snippet', {
+      type: 'JSON',
+      args: {
+        ytId: schema.stringArg(),
+      },
+      async resolve(root, { ytId }, ctx) {
+        const response = await fetch(
+          `https://www.googleapis.com/youtube/v3/videos?part=snippet&key=${process.env.YOUTUBE_API_KEY}&id=${ytId}`,
+        ).then((res) => res.json())
+        return response
+      },
+    })
 
     t.field('me', {
       type: 'User',
