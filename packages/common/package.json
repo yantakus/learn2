@@ -1,8 +1,0 @@
-{
-  "name": "@learn/common",
-  "version": "1.0.0",
-  "license": "MIT",
-  "dependencies": {
-    "firebase-admin": "^8.10.0"
-  }
-}

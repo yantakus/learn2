@@ -1,24 +1,61 @@
 {
-  "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
+  "name": "Learn",
+  "version": "1.0.0",
+  "license": "MIT",
   "scripts": {
-    "dev": "concurrently \"yarn dev-client\" \"yarn dev-server\"",
-    "dev-client": "yarn workspace @learn/client dev",
-    "dev-server": "yarn workspace @learn/server dev",
-    "migrate-save": "yarn workspace @learn/server migrate-save",
-    "migrate-up": "yarn workspace @learn/server migrate-up"
+    "build": "nexus build && next build",
+    "db:migrate": "yarn -s prisma migrate save --experimental && yarn -s prisma migrate up --experimental",
+    "deploy:preview": "now",
+    "deploy:prod": "now --prod",
+    "dev": "next dev",
+    "dev:inspect": "NODE_OPTIONS='--inspect' next",
+    "nexus:check": "nexus build --entrypoint pages/api/graphql.ts && nexus build --entrypoint pages/api/playground.ts",
+    "nexus:reflection": "nexus dev --reflection --entrypoint pages/api/graphql.ts",
+    "start": "next start",
+    "test": "nexus build"
   },
   "prettier": {
-    "singleQuote": true,
     "semi": false,
+    "singleQuote": true,
     "trailingComma": "all"
   },
-  "engines": {
-    "node": ">=10.0.0"
-  },
   "dependencies": {
-    "concurrently": "^5.2.0"
+    "@apollo/react-hooks": "^3.1.4",
+    "@apollo/react-ssr": "^3.1.4",
+    "@chakra-ui/core": "0.8.0",
+    "@emotion/core": "^10.0.28",
+    "@emotion/styled": "^10.0.27",
+    "apollo-cache-inmemory": "^1.6.5",
+    "apollo-client": "^2.6.8",
+    "apollo-link-http": "^1.5.17",
+    "cookie-parser": "^1.4.5",
+    "emotion-theming": "^10.0.27",
+    "firebase": "^7.13.2",
+    "firebase-admin": "^8.10.0",
+    "formik": "^2.1.4",
+    "graphql": "14.6.0",
+    "graphql-tag": "^2.10.3",
+    "graphql-type-json": "^0.3.1",
+    "graphql-yoga": "1.18.3",
+    "isomorphic-unfetch": "^3.0.0",
+    "js-cookie": "^2.2.1",
+    "lodash": "^4.17.15",
+    "next": "9.3.5",
+    "nexus": "0.22.0",
+    "nexus-plugin-prisma": "0.8.0",
+    "nexus-plugin-shield": "^0.1.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-firebaseui": "^4.1.0",
+    "react-select": "^3.1.0"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.2",
+    "@types/graphql-type-json": "^0.3.2",
+    "@types/lodash": "4.14.108",
+    "@types/node": "12.12.34",
+    "@types/react": "^16.9.32",
+    "dotenv": "^8.2.0",
+    "typescript": "^3.9.3"
   }
 }
