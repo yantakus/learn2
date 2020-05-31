@@ -1,34 +1,26 @@
 import { rule, shield } from 'nexus-plugin-shield'
-import getUserId from '../utils/server/getUserId'
 
 const rules = {
   isAuthenticatedUser: rule()(async (_parent, _args, context) => {
-    const userId = await getUserId(context)
-    return Boolean(userId)
+    return Boolean(context.userId)
   }),
-  isVideoOwner: rule()((_parent, { ytId }, context: NexusContext) => {
-    const userIdPromise = getUserId(context)
-    const authorPromise = context.db.video
+  isVideoOwner: rule()(async (_parent, { ytId }, context) => {
+    const author = await context.db.video
       .findOne({
         where: {
           ytId,
         },
       })
       .uploader()
-    return Promise.all([userIdPromise, authorPromise]).then(
-      ([userId, author]) => userId === author?.uid,
-    )
+    return context.userId === author?.uid
   }),
 }
 
 const permissions = shield({
   rules: {
-    Query: {
-      // me: rules.isAuthenticatedUser,
-    },
     Mutation: {
-      addVideo: rules.isAuthenticatedUser,
-      editVideo: rules.isVideoOwner,
+      createOneVideo: rules.isAuthenticatedUser,
+      updateOneVideo: rules.isVideoOwner,
     },
   },
   options: {

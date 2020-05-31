@@ -4,13 +4,13 @@
   "license": "MIT",
   "scripts": {
     "build": "nexus build && next build",
-    "db:migrate": "yarn -s prisma migrate save --experimental && yarn -s prisma migrate up --experimental",
+    "migrate": "yarn -s prisma migrate save --experimental && yarn -s prisma migrate up --experimental",
     "deploy:preview": "now",
     "deploy:prod": "now --prod",
-    "dev": "next dev",
-    "dev:inspect": "NODE_OPTIONS='--inspect' next",
+    "next:inspect": "NODE_OPTIONS='--inspect' next",
     "nexus:check": "nexus build --entrypoint pages/api/graphql.ts && nexus build --entrypoint pages/api/playground.ts",
-    "nexus:reflection": "nexus dev --reflection --entrypoint pages/api/graphql.ts",
+    "nexus": "nexus dev --reflection --entrypoint pages/api/graphql.ts",
+    "dev": "concurrently \"yarn next\" \"yarn nexus\"",
     "start": "next start",
     "test": "nexus build"
   },
@@ -25,9 +25,12 @@
     "@chakra-ui/core": "0.8.0",
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
+    "@prisma/client": "2.0.0-beta.4",
     "apollo-cache-inmemory": "^1.6.5",
     "apollo-client": "^2.6.8",
     "apollo-link-http": "^1.5.17",
+    "apollo-link-schema": "^1.2.5",
+    "concurrently": "^5.2.0",
     "cookie-parser": "^1.4.5",
     "emotion-theming": "^10.0.27",
     "firebase": "^7.13.2",
@@ -50,12 +53,13 @@
     "react-select": "^3.1.0"
   },
   "devDependencies": {
+    "@prisma/cli": "2.0.0-beta.7",
     "@types/cookie-parser": "^1.4.2",
     "@types/graphql-type-json": "^0.3.2",
     "@types/lodash": "4.14.108",
     "@types/node": "12.12.34",
     "@types/react": "^16.9.32",
-    "dotenv": "^8.2.0",
-    "typescript": "^3.9.3"
+    "@types/react-select": "^3.0.13",
+    "dotenv": "^8.2.0"
   }
 }

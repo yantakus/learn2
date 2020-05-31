@@ -8,3 +8,10 @@
 20200414132300-update-uid-type
 20200423100934-upgrade-old-schema-to-prisma-v2
 20200512123453-json
+20200526103828-rename-parent-fields-to-video
+20200527130810-remove-language-and-bookmarkers-from-video
+20200528112126-add-language-field-to-video
+20200529101223-rename-text-to-label
+20200530093616-make-topic-singule
+20200530100158-title-case-unums
+20200531100701-revert-enums

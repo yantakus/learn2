@@ -3,7 +3,7 @@ import initFirebaseAdmin from './initFirebaseAdmin'
 
 initFirebaseAdmin()
 
-function getUserId({ req }) {
+function getUserId(req) {
   const token = req.cookies?.session
   // Verify the session cookie. In this case an additional check is added to detect if the user's Firebase session was revoked, user deleted/disabled, etc.
   if (token) {

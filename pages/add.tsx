@@ -1,12 +1,11 @@
 import React from 'react'
 
-import { Private } from 'components'
+import { Private, VideoForm } from 'components'
 
 const AddPage = () => {
   return (
     <Private>
-      Hey
-      {/* <VideoForm /> */}
+      <VideoForm />
     </Private>
   )
 }

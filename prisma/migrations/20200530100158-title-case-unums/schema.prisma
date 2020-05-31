@@ -5,7 +5,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 model Video {
@@ -21,8 +21,6 @@ model Video {
   uploaderId String
   language   Language   @relation(fields: [languageId], references: [id])
   languageId Int
-  User       User?      @relation(fields: [userUid], references: [uid])
-  userUid    String?
 }
 
 model User {
@@ -42,8 +40,8 @@ model Vote {
 }
 
 enum VoteType {
-  UP
-  DOWN
+  Up
+  Down
 }
 
 model Topic {
@@ -68,8 +66,8 @@ model Language {
 }
 
 enum Complexity {
-  ELEMENTARY
-  BASIC
-  ADVANCED
-  EXPERT
+  Elementary
+  Basic
+  Advanced
+  Expert
 }

@@ -5,15 +5,14 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 model Video {
   ytId       String     @id
   snippet    Json
   complexity Complexity
-  topic      Topic      @relation(fields: [topicId], references: [id])
-  topicId    Int
+  topics     Topic[]    @relation(references: [id])
   tags       Tag[]      @relation(references: [id])
   votes      Vote[]
   voteScore  Int?       @default(0)
@@ -21,8 +20,6 @@ model Video {
   uploaderId String
   language   Language   @relation(fields: [languageId], references: [id])
   languageId Int
-  User       User?      @relation(fields: [userUid], references: [uid])
-  userUid    String?
 }
 
 model User {
@@ -50,7 +47,7 @@ model Topic {
   id     Int     @default(autoincrement()) @id
   value  String  @unique
   label  String  @unique
-  videos Video[]
+  videos Video[] @relation(references: [ytId])
 }
 
 model Tag {

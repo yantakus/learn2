@@ -11,7 +11,7 @@ const Player: React.FC<Props & AspectRatioBoxProps> = ({ ytId, ...rest }) => {
       <Box
         width="100%"
         as="iframe"
-        // @ts-expect-error
+        // @ts-ignore
         src={`https://www.youtube.com/embed/${ytId}`}
         allowFullScreen
       />

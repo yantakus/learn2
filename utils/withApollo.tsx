@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { ApolloProvider } from '@apollo/react-hooks'
 import { ApolloClient } from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory'
+import { HttpLink } from 'apollo-link-http'
 
 let globalApolloClient = null
 
@@ -139,13 +140,13 @@ function createApolloClient(ctx = {}, initialState = {}) {
   })
 }
 
-function createIsomorphLink(ctx) {
+function createIsomorphLink(context) {
   // if (typeof window === 'undefined') {
   //   const { SchemaLink } = require('apollo-link-schema')
-  //   const { schema } = require('./schema')
-  //   return new SchemaLink({ schema, context: ctx })
+  //   const { schema } = require('nexus')
+  //   return new SchemaLink({ schema, context })
   // } else {
-  const { HttpLink } = require('apollo-link-http')
+  // const { HttpLink } = require('apollo-link-http')
 
   return new HttpLink({
     uri: 'http://localhost:3000/api/graphql',
