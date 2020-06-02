@@ -9,26 +9,26 @@ datasource db {
 }
 
 model Video {
-  ytId       String     @id
-  snippet    Json
-  complexity Complexity
-  topic      Topic      @relation(fields: [topicId], references: [id])
-  topicId    Int
-  tags       Tag[]      @relation(references: [id])
-  votes      Vote[]
-  voteScore  Int?       @default(0)
-  uploader   User       @relation("UserVideos", fields: [uploaderId], references: [uid])
-  uploaderId String
-  language   Language   @relation(fields: [languageId], references: [id])
-  languageId Int
-  User       User?      @relation(fields: [userUid], references: [uid])
-  userUid    String?
+  ytId        String     @id
+  etag        String
+  snippet     Json
+  complexity  Complexity
+  topic       Topic      @relation(fields: [topicId], references: [id])
+  topicId     Int
+  tags        Tag[]      @relation(references: [id])
+  votes       Vote[]
+  voteScore   Int?       @default(0)
+  uploader    User       @relation("UserVideos", fields: [uploaderId], references: [uid])
+  uploaderId  String
+  bookmarkers User[]     @relation("UserBookmarks")
+  language    Language   @relation(fields: [languageId], references: [id])
+  languageId  Int
 }
 
 model User {
   uid       String  @id
   videos    Video[] @relation("UserVideos")
-  bookmarks Video[]
+  bookmarks Video[] @relation("UserBookmarks")
   votes     Vote[]
 }
 

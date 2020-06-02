@@ -42,6 +42,7 @@ schema.mutationType({
   definition(t) {
     t.crud.createOneUser()
     t.crud.createOneLanguage()
+
     t.field('createOneVideo', {
       type: 'Video',
       args: {
@@ -71,9 +72,9 @@ schema.mutationType({
         { ytId, language, complexity, tags, addedTags, topic, addedTopic },
         ctx,
       ) {
-        let snippet
+        let ytResponse
         try {
-          snippet = await fetch(
+          ytResponse = await fetch(
             `https://www.googleapis.com/youtube/v3/videos?part=snippet&key=${process.env.YOUTUBE_API_KEY}&id=${ytId}`,
           ).then((res) => res.json())
         } catch (e) {
@@ -82,7 +83,8 @@ schema.mutationType({
 
         const data = {
           ytId,
-          snippet: JSON.stringify(snippet.items[0]),
+          snippet: JSON.stringify(ytResponse.items[0].snippet),
+          etag: ytResponse.items[0].etag,
           complexity,
           language: { connect: language },
           tags: { connect: tags, create: addedTags },
@@ -90,7 +92,7 @@ schema.mutationType({
           uploader: { connect: { uid: ctx.userId } },
         }
 
-        if (snippet?.pageInfo?.totalResults < 1) {
+        if (ytResponse?.pageInfo?.totalResults < 1) {
           return new Error('Error while fetching snippet')
         }
 

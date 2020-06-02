@@ -20,6 +20,28 @@
       ]
     },
     {
+      "tag": "CreateSource",
+      "source": "db"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Source",
+        "source": "db"
+      },
+      "argument": "provider",
+      "value": "\"postgresql\""
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Source",
+        "source": "db"
+      },
+      "argument": "url",
+      "value": "env(\"DATABASE_URL\")"
+    },
+    {
       "tag": "CreateModel",
       "model": "Video"
     },
@@ -45,60 +67,7 @@
       "tag": "CreateField",
       "model": "Video",
       "field": "snippet",
-      "type": "String",
-      "arity": "Required"
-    },
-    {
-      "tag": "CreateField",
-      "model": "Video",
-      "field": "language",
-      "type": "Language",
-      "arity": "Required"
-    },
-    {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "Video",
-          "field": "language"
-        },
-        "directive": "relation"
-      }
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "Video",
-          "field": "language"
-        },
-        "directive": "relation"
-      },
-      "argument": "fields",
-      "value": "[languageId]"
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "Video",
-          "field": "language"
-        },
-        "directive": "relation"
-      },
-      "argument": "references",
-      "value": "[id]"
-    },
-    {
-      "tag": "CreateField",
-      "model": "Video",
-      "field": "languageId",
-      "type": "Int",
+      "type": "Json",
       "arity": "Required"
     },
     {
@@ -111,9 +80,9 @@
     {
       "tag": "CreateField",
       "model": "Video",
-      "field": "topics",
+      "field": "topic",
       "type": "Topic",
-      "arity": "List"
+      "arity": "Required"
     },
     {
       "tag": "CreateDirective",
@@ -121,7 +90,7 @@
         "path": {
           "tag": "Field",
           "model": "Video",
-          "field": "topics"
+          "field": "topic"
         },
         "directive": "relation"
       }
@@ -133,12 +102,33 @@
         "path": {
           "tag": "Field",
           "model": "Video",
-          "field": "topics"
+          "field": "topic"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[topicId]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Video",
+          "field": "topic"
         },
         "directive": "relation"
       },
       "argument": "references",
       "value": "[id]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Video",
+      "field": "topicId",
+      "type": "Int",
+      "arity": "Required"
     },
     {
       "tag": "CreateField",
@@ -171,52 +161,6 @@
       },
       "argument": "references",
       "value": "[id]"
-    },
-    {
-      "tag": "CreateField",
-      "model": "Video",
-      "field": "bookmarkers",
-      "type": "User",
-      "arity": "List"
-    },
-    {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "Video",
-          "field": "bookmarkers"
-        },
-        "directive": "relation"
-      }
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "Video",
-          "field": "bookmarkers"
-        },
-        "directive": "relation"
-      },
-      "argument": "",
-      "value": "\"UserBookmarks\""
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "Video",
-          "field": "bookmarkers"
-        },
-        "directive": "relation"
-      },
-      "argument": "references",
-      "value": "[uid]"
     },
     {
       "tag": "CreateField",
@@ -325,6 +269,180 @@
       "arity": "Required"
     },
     {
+      "tag": "CreateField",
+      "model": "Video",
+      "field": "language",
+      "type": "Language",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Video",
+          "field": "language"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Video",
+          "field": "language"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[languageId]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Video",
+          "field": "language"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Video",
+      "field": "languageId",
+      "type": "Int",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Video",
+      "field": "User",
+      "type": "User",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Video",
+          "field": "User"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Video",
+          "field": "User"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[userUid]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Video",
+          "field": "User"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[uid]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Video",
+      "field": "userUid",
+      "type": "String",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateModel",
+      "model": "User"
+    },
+    {
+      "tag": "CreateField",
+      "model": "User",
+      "field": "uid",
+      "type": "String",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "User",
+          "field": "uid"
+        },
+        "directive": "id"
+      }
+    },
+    {
+      "tag": "CreateField",
+      "model": "User",
+      "field": "videos",
+      "type": "Video",
+      "arity": "List"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "User",
+          "field": "videos"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "User",
+          "field": "videos"
+        },
+        "directive": "relation"
+      },
+      "argument": "",
+      "value": "\"UserVideos\""
+    },
+    {
+      "tag": "CreateField",
+      "model": "User",
+      "field": "bookmarks",
+      "type": "Video",
+      "arity": "List"
+    },
+    {
+      "tag": "CreateField",
+      "model": "User",
+      "field": "votes",
+      "type": "Vote",
+      "arity": "List"
+    },
+    {
       "tag": "CreateModel",
       "model": "Vote"
     },
@@ -374,7 +492,7 @@
     {
       "tag": "CreateField",
       "model": "Vote",
-      "field": "parent",
+      "field": "video",
       "type": "Video",
       "arity": "Required"
     },
@@ -384,7 +502,7 @@
         "path": {
           "tag": "Field",
           "model": "Vote",
-          "field": "parent"
+          "field": "video"
         },
         "directive": "relation"
       }
@@ -396,12 +514,12 @@
         "path": {
           "tag": "Field",
           "model": "Vote",
-          "field": "parent"
+          "field": "video"
         },
         "directive": "relation"
       },
       "argument": "fields",
-      "value": "[parentId]"
+      "value": "[videoId]"
     },
     {
       "tag": "CreateArgument",
@@ -410,7 +528,7 @@
         "path": {
           "tag": "Field",
           "model": "Vote",
-          "field": "parent"
+          "field": "video"
         },
         "directive": "relation"
       },
@@ -420,7 +538,7 @@
     {
       "tag": "CreateField",
       "model": "Vote",
-      "field": "parentId",
+      "field": "videoId",
       "type": "String",
       "arity": "Required"
     },
@@ -552,7 +670,7 @@
     {
       "tag": "CreateField",
       "model": "Topic",
-      "field": "text",
+      "field": "label",
       "type": "String",
       "arity": "Required"
     },
@@ -562,7 +680,7 @@
         "path": {
           "tag": "Field",
           "model": "Topic",
-          "field": "text"
+          "field": "label"
         },
         "directive": "unique"
       }
@@ -573,31 +691,6 @@
       "field": "videos",
       "type": "Video",
       "arity": "List"
-    },
-    {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "Topic",
-          "field": "videos"
-        },
-        "directive": "relation"
-      }
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "Topic",
-          "field": "videos"
-        },
-        "directive": "relation"
-      },
-      "argument": "references",
-      "value": "[ytId]"
     },
     {
       "tag": "CreateModel",
@@ -667,7 +760,7 @@
     {
       "tag": "CreateField",
       "model": "Tag",
-      "field": "text",
+      "field": "label",
       "type": "String",
       "arity": "Required"
     },
@@ -677,7 +770,7 @@
         "path": {
           "tag": "Field",
           "model": "Tag",
-          "field": "text"
+          "field": "label"
         },
         "directive": "unique"
       }
@@ -782,7 +875,7 @@
     {
       "tag": "CreateField",
       "model": "Language",
-      "field": "text",
+      "field": "label",
       "type": "String",
       "arity": "Required"
     },
@@ -792,7 +885,7 @@
         "path": {
           "tag": "Field",
           "model": "Language",
-          "field": "text"
+          "field": "label"
         },
         "directive": "unique"
       }
@@ -800,89 +893,9 @@
     {
       "tag": "CreateField",
       "model": "Language",
-      "field": "parent",
-      "type": "Video",
-      "arity": "List"
-    },
-    {
-      "tag": "DeleteModel",
-      "model": "Post"
-    },
-    {
-      "tag": "CreateField",
-      "model": "User",
       "field": "videos",
       "type": "Video",
       "arity": "List"
-    },
-    {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "User",
-          "field": "videos"
-        },
-        "directive": "relation"
-      }
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "User",
-          "field": "videos"
-        },
-        "directive": "relation"
-      },
-      "argument": "",
-      "value": "\"UserVideos\""
-    },
-    {
-      "tag": "CreateField",
-      "model": "User",
-      "field": "bookmarks",
-      "type": "Video",
-      "arity": "List"
-    },
-    {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "User",
-          "field": "bookmarks"
-        },
-        "directive": "relation"
-      }
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "User",
-          "field": "bookmarks"
-        },
-        "directive": "relation"
-      },
-      "argument": "",
-      "value": "\"UserBookmarks\""
-    },
-    {
-      "tag": "CreateField",
-      "model": "User",
-      "field": "votes",
-      "type": "Vote",
-      "arity": "List"
-    },
-    {
-      "tag": "DeleteField",
-      "model": "User",
-      "field": "posts"
     }
   ]
 }

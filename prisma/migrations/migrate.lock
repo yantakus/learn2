@@ -1,17 +1,6 @@
-# IF THERE'S A GIT CONFLICT IN THIS FILE, DON'T SOLVE IT MANUALLY!
-# INSTEAD EXECUTE `prisma migrate fix`
 # Prisma Migrate lockfile v1
-# Read more about conflict resolution here: TODO
 
-20200403130940-init
-20200411113543-update-user
-20200414132300-update-uid-type
-20200423100934-upgrade-old-schema-to-prisma-v2
-20200512123453-json
-20200526103828-rename-parent-fields-to-video
-20200527130810-remove-language-and-bookmarkers-from-video
-20200528112126-add-language-field-to-video
-20200529101223-rename-text-to-label
-20200530093616-make-topic-singule
-20200530100158-title-case-unums
-20200531100701-revert-enums
+20200601122310-upgrade-to-2-0-0-beta-7
+20200601131931
+20200601134409-add-bookmarkers-relation
+20200601135244-add-etag

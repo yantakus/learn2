@@ -4,9 +4,9 @@
     {
       "tag": "CreateField",
       "model": "Video",
-      "field": "topic",
-      "type": "Topic",
-      "arity": "Required"
+      "field": "bookmarkers",
+      "type": "User",
+      "arity": "List"
     },
     {
       "tag": "CreateDirective",
@@ -14,7 +14,7 @@
         "path": {
           "tag": "Field",
           "model": "Video",
-          "field": "topic"
+          "field": "bookmarkers"
         },
         "directive": "relation"
       }
@@ -26,49 +26,52 @@
         "path": {
           "tag": "Field",
           "model": "Video",
-          "field": "topic"
+          "field": "bookmarkers"
         },
         "directive": "relation"
       },
-      "argument": "fields",
-      "value": "[topicId]"
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "Video",
-          "field": "topic"
-        },
-        "directive": "relation"
-      },
-      "argument": "references",
-      "value": "[id]"
-    },
-    {
-      "tag": "CreateField",
-      "model": "Video",
-      "field": "topicId",
-      "type": "Int",
-      "arity": "Required"
+      "argument": "",
+      "value": "\"UserBookmarks\""
     },
     {
       "tag": "DeleteField",
       "model": "Video",
-      "field": "topics"
+      "field": "User"
     },
     {
-      "tag": "DeleteDirective",
+      "tag": "DeleteField",
+      "model": "Video",
+      "field": "userUid"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Video",
+      "field": "etag"
+    },
+    {
+      "tag": "CreateDirective",
       "location": {
         "path": {
           "tag": "Field",
-          "model": "Topic",
-          "field": "videos"
+          "model": "User",
+          "field": "bookmarks"
         },
         "directive": "relation"
       }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "User",
+          "field": "bookmarks"
+        },
+        "directive": "relation"
+      },
+      "argument": "",
+      "value": "\"UserBookmarks\""
     }
   ]
 }

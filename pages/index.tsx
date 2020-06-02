@@ -1,17 +1,25 @@
 import React from 'react'
-import Link from 'next/link'
+import { SimpleGrid, Spinner, Box } from '@chakra-ui/core'
+import { Video } from 'components'
+import { map } from 'lodash'
+import { useQuery } from '@apollo/react-hooks'
+import { VIDEOS_QUERY } from 'models/video'
 
-const Index: React.FC = () => {
+const HomePage = () => {
+  const { data, loading } = useQuery(VIDEOS_QUERY)
+  if (loading)
+    return (
+      <Box textAlign="center">
+        <Spinner size="xl" />
+      </Box>
+    )
   return (
-    <div>
-      <p>Hi there!</p>
-      <div>
-        <Link href={'/example'}>
-          <a>Another example page</a>
-        </Link>
-      </div>
-    </div>
+    <SimpleGrid columns={{ xs: 1, sm: 2, md: 3 }} spacing="6">
+      {map(data?.videos, (video) => (
+        <Video video={video} />
+      ))}
+    </SimpleGrid>
   )
 }
 
-export default Index
+export default HomePage

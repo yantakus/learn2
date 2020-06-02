@@ -8,8 +8,9 @@
     "deploy:preview": "now",
     "deploy:prod": "now --prod",
     "next:inspect": "NODE_OPTIONS='--inspect' next",
-    "nexus:check": "nexus build --entrypoint pages/api/graphql.ts && nexus build --entrypoint pages/api/playground.ts",
     "nexus": "nexus dev --reflection --entrypoint pages/api/graphql.ts",
+    "nexus:check": "nexus build --entrypoint pages/api/graphql.ts && nexus build --entrypoint pages/api/playground.ts",
+    "studio": "yarn -s prisma studio --experimental",
     "dev": "concurrently \"yarn next\" \"yarn nexus\"",
     "start": "next start",
     "test": "nexus build"
@@ -50,6 +51,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-firebaseui": "^4.1.0",
+    "react-icons": "^3.10.0",
     "react-select": "^3.1.0"
   },
   "devDependencies": {

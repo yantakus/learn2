@@ -20,6 +20,32 @@ export const VIDEO_META_QUERY = gql`
   }
 `
 
+export const VIDEOS_QUERY = gql`
+  {
+    videos {
+      ytId
+      snippet
+      voteScore
+      tags {
+        id
+        value
+        label
+      }
+      topic {
+        id
+        value
+        label
+      }
+      language {
+        id
+        value
+        label
+      }
+      complexity
+    }
+  }
+`
+
 export const UPDATE_VIDEO_MUTATION = gql`
   mutation(
     $ytId: String!
