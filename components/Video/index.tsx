@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import { Box, Flex, Text, Icon, Image, Divider } from '@chakra-ui/core'
+import { Box, Flex, Text, IconButton, Image, Divider } from '@chakra-ui/core'
 import get from 'lodash/get'
 import { useAuth } from 'hooks'
 import { AiFillTags, AiFillFolder } from 'react-icons/ai'
@@ -19,23 +19,20 @@ const Video = ({ video }) => {
       flexDir="column"
     >
       <Box position="relative">
-        <Image
-          width="100%"
-          src={get(snippet, ['thumbnails', 'medium', 'url'])}
-        />
+        <Link href={`/video/${video.ytId}`}>
+          <a>
+            <Image
+              width="100%"
+              src={get(snippet, ['thumbnails', 'medium', 'url'])}
+            />
+          </a>
+        </Link>
         {video?.uploader?.uid === user?.uid && (
-          <Box
-            position="absolute"
-            bottom="1"
-            right="1"
-            p="0 0 2px 2px"
-            borderRadius="sm"
-            backgroundColor="white"
-          >
+          <Box position="absolute" bottom={1} right={1}>
             <Link href={`/video/${video.ytId}/edit`}>
-              <Text as="a" display="block" lineHeight="1">
-                <Icon name="edit" />
-              </Text>
+              <a>
+                <IconButton aria-label="Edit" size="xs" icon="edit" />
+              </a>
             </Link>
           </Box>
         )}
@@ -65,7 +62,16 @@ const Video = ({ video }) => {
         </Flex>
         <Box mb="2">
           <Link href={`/video/${video.ytId}`}>
-            <a className="text-grey-darkest">{snippet.title}</a>
+            <Text
+              as="a"
+              color="gray.900"
+              fontWeight="700"
+              display="block"
+              lineHeight="1.2"
+              cursor="pointer"
+            >
+              {snippet.title}
+            </Text>
           </Link>
         </Box>
 

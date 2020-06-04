@@ -4,3 +4,5 @@
 20200601131931
 20200601134409-add-bookmarkers-relation
 20200601135244-add-etag
+20200603171016-separate-upvote-and-downvote-count
+20200604094302-remove-vote-counts

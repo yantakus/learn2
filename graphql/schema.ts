@@ -2,6 +2,7 @@ import { schema, use, server, settings } from 'nexus'
 import { prisma } from 'nexus-plugin-prisma'
 import { GraphQLJSONObject } from 'graphql-type-json'
 import cookieParser from 'cookie-parser'
+import { reduce } from 'lodash'
 
 import permissions from '../permissions'
 import getUserId from '../utils/server/getUserId'
@@ -101,6 +102,58 @@ schema.mutationType({
         })
       },
     })
+
+    t.field('voteVideo', {
+      type: 'Video',
+      args: {
+        ytId: schema.stringArg({ nullable: false }),
+        type: schema.arg({ type: 'VoteType', nullable: false }),
+      },
+      async resolve(_root, { ytId, type }, { userId, db }) {
+        const video = await db.video.findOne({
+          where: { ytId },
+          select: {
+            votes: { where: { userId }, select: { type: true, id: true } },
+          },
+        })
+        if (!video) {
+          throw new Error('Something went wrong')
+        }
+        const existingVote = video.votes[0]
+        const existingVoteHasTheSameType =
+          existingVote && existingVote.type === type
+
+        if (!existingVote) {
+          return db.video.update({
+            where: { ytId },
+            data: {
+              votes: {
+                create: {
+                  type,
+                  user: { connect: { uid: userId } },
+                },
+              },
+            },
+          })
+        } else if (existingVoteHasTheSameType) {
+          return db.video.update({
+            where: { ytId },
+            data: {
+              votes: { delete: { id: existingVote.id } },
+            },
+          })
+        } else {
+          return db.video.update({
+            where: { ytId },
+            data: {
+              votes: {
+                update: { where: { id: existingVote.id }, data: { type } },
+              },
+            },
+          })
+        }
+      },
+    })
   },
 })
 
@@ -198,12 +251,32 @@ schema.objectType({
   definition(t) {
     t.model.ytId()
     t.model.uploader()
+    t.model.bookmarkers()
     t.model.language()
     t.model.complexity()
     t.model.topic()
     t.model.snippet()
     t.model.tags()
     t.model.votes()
-    t.model.voteScore()
+    t.field('voteScore', {
+      type: 'Int',
+      async resolve(root, _args, ctx) {
+        const votes = await ctx.db.vote.findMany({
+          where: { videoId: root.ytId },
+          select: { type: true },
+        })
+        return reduce(
+          votes,
+          function (sum, vote) {
+            if (vote.type === 'UP') {
+              return sum + 1
+            } else {
+              return sum - 1
+            }
+          },
+          0,
+        )
+      },
+    })
   },
 })
