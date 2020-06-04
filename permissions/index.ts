@@ -20,6 +20,8 @@ const permissions = shield({
   rules: {
     Mutation: {
       createOneVideo: rules.isAuthenticatedUser,
+      voteVideo: rules.isAuthenticatedUser,
+      bookmarkVideo: rules.isAuthenticatedUser,
       updateOneVideo: rules.isVideoOwner,
     },
   },

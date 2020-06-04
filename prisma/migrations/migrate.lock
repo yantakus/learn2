@@ -6,3 +6,7 @@
 20200601135244-add-etag
 20200603171016-separate-upvote-and-downvote-count
 20200604094302-remove-vote-counts
+20200604121237-add-references-to-user-bookmarks-connection
+20200604122318-revert-reference-fields-for-user-bookmarks-relation
+20200604122921-one-way-reference-for-user-bookmarks
+20200604123600-revert-user-bookmarks-relation-changes

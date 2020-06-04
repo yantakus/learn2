@@ -117,7 +117,7 @@ schema.mutationType({
           },
         })
         if (!video) {
-          throw new Error('Something went wrong')
+          throw new Error('Video not found')
         }
         const existingVote = video.votes[0]
         const existingVoteHasTheSameType =
@@ -148,6 +148,49 @@ schema.mutationType({
             data: {
               votes: {
                 update: { where: { id: existingVote.id }, data: { type } },
+              },
+            },
+          })
+        }
+      },
+    })
+
+    t.field('bookmarkVideo', {
+      type: 'Video',
+      args: {
+        ytId: schema.stringArg({ nullable: false }),
+      },
+      async resolve(_root, { ytId }, { userId, db }) {
+        const video = await db.video.findOne({
+          where: { ytId },
+          select: {
+            bookmarkers: { where: { uid: userId }, select: { uid: true } },
+          },
+        })
+        if (!video) {
+          throw new Error('Video not found')
+        }
+        const alreadyBookmarked = video.bookmarkers[0]
+
+        if (alreadyBookmarked) {
+          return db.video.update({
+            where: { ytId },
+            data: {
+              bookmarkers: {
+                disconnect: {
+                  uid: userId,
+                },
+              },
+            },
+          })
+        } else {
+          return db.video.update({
+            where: { ytId },
+            data: {
+              bookmarkers: {
+                connect: {
+                  uid: userId,
+                },
               },
             },
           })

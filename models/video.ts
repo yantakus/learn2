@@ -130,11 +130,9 @@ export const CREATE_VIDEO_MUTATION = gql`
 `
 
 export const BOOKMARK_VIDEO_MUTATION = gql`
-  mutation BOOKMARK_VIDEO_MUTATION($ytId: ID!, $adding: Boolean!) {
-    bookmarkVideo(ytId: $ytId, adding: $adding) {
-      bookmarkers {
-        uid
-      }
+  mutation BOOKMARK_VIDEO_MUTATION($ytId: String!) {
+    bookmarkVideo(ytId: $ytId) {
+      ytId
     }
   }
 `

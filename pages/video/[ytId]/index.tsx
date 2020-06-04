@@ -3,7 +3,6 @@ import { getOperationName } from 'apollo-utilities'
 import { Box, IconButton, Tooltip, Text, Flex, Heading } from '@chakra-ui/core'
 import get from 'lodash/get'
 import find from 'lodash/find'
-import filter from 'lodash/filter'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import { BsBookmarkPlus, BsBookmarkDash } from 'react-icons/bs'
 
@@ -130,48 +129,14 @@ const VideoPage: React.FC<Props> = (props) => {
                     variantColor={bookmarked ? 'pink' : 'gray'}
                     icon={bookmarked ? BsBookmarkDash : BsBookmarkPlus}
                     onClick={() => {
-                      const adding = !bookmarked
                       bookmark({
                         variables: {
                           ytId,
-                          adding,
-                        },
-                        optimisticResponse: {
-                          bookmarkVideo: {
-                            bookmarkers: adding
-                              ? [
-                                  ...bookmarkers,
-                                  {
-                                    id: user.uid,
-                                    __typename: 'User',
-                                  },
-                                ]
-                              : filter(bookmarkers, (o) => o.id !== user.uid),
-                            __typename: 'Video',
-                          },
-                          __typename: 'Mutation',
-                        },
-                        update: (
-                          proxy,
-                          {
-                            data: {
-                              bookmarkVideo: { bookmarkers },
-                            },
-                          },
-                        ) => {
-                          const data: any = proxy.readQuery({
-                            query: VIDEO_QUERY,
-                            variables: { ytId },
-                          })
-                          data.video = {
-                            ...data.video,
-                            bookmarkers,
-                          }
-                          proxy.writeQuery({ query: VIDEO_QUERY, data })
                         },
                       })
                     }}
                     isDisabled={bookmarkMutationLoading}
+                    isLoading={bookmarkMutationLoading}
                   />
                 </Tooltip>
               </Box>
